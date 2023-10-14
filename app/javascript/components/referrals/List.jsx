@@ -11,7 +11,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Box } from "@material-ui/core";
 
-const List = () => {
+
+const List = ({setIsLoggedIn}) => {
   const [referrals, setReferrals] = useState([]);
   const [referralToInvite, setReferralToInvite] = useState("");
 
@@ -23,6 +24,7 @@ const List = () => {
     const res = await referralApi.index();
     setReferrals(res.data);
   };
+
 
   const handleInvite = async () => {
     const res = await referralApi.create({ email: referralToInvite });
