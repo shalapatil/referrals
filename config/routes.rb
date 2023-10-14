@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get "signup", to: "signup#show"
+
   devise_for :users
   root "homepage#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
