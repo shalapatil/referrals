@@ -5,6 +5,12 @@ Rails.application.routes.draw do
       get 'referrals/create'
       get 'referrals/show'
       get 'referrals/destroy'
+
+      devise_scope :user do
+        post "login", to: "sessions#create", as: "login"
+        delete "logout", to: "sessions#destroy", as: "logout"
+        post "signup", to: "registrations#create", as: "signup"
+      end
     end
   end
   devise_for :users
