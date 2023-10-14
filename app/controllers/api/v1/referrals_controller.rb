@@ -1,6 +1,8 @@
 class Api::V1::ReferralsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    referrals = Referral.all
+    referrals = Referral.where(sender: current_user)
     render json: referrals
   end
 
