@@ -1,9 +1,12 @@
 import axios from "./api";
 
-const index = () => axios.get("/referrals/index");
+const index = () => axios.get("/referrals");
+
+const create = payload => axios.post("/referrals", payload)
 
 const referralApi = {
-  index
+  index,
+  create
 };
 
 export default referralApi;

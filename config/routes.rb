@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get "referrals/index"
-      get "referrals/create"
-      get "referrals/show"
-    get "referrals/destroy"
+      resources :referrals, only: [:index, :create]
 
       devise_scope :user do
         post "login", to: "sessions#create", as: "login"

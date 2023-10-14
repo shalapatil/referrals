@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import Toolbar from "@material-ui/core/Toolbar";
-import MenuIcon from "@material-ui/icons/Menu";
-import Typography from "@material-ui/core/Typography";
 import referralApi from "../../apis/referral";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -16,35 +9,75 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { Box } from "@material-ui/core";
 
 const List = () => {
   const [referrals, setReferrals] = useState([]);
+  const [referralToInvite, setReferralToInvite] = useState("");
 
-  useEffect(async () => {
+  useEffect(() => {
+    fetchReferrals();
+  }, []);
+
+  const fetchReferrals = async () => {
     const res = await referralApi.index();
     setReferrals(res.data);
-  }, []);
+  };
+
+  const handleInvite = async () => {
+    const res = await referralApi.create({ email: referralToInvite });
+    setReferralToInvite("");
+    fetchReferrals();
+  };
 
   return (
     <React.Fragment>
-      <TableContainer component={Paper} style={{ width: 500 }}>
-        <Table style={{ width: 500 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Email</TableCell>
-              <TableCell>Invite at</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {referrals.map((referral) => (
-              <TableRow>
-                <TableCell>{referral.email}</TableCell>
-                <TableCell>{referral.created_at}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Box display="flex" width={"100%"} height={80}>
+        <Box m="auto">
+          <TextField
+            id="referralEmail"
+            value={referralToInvite}
+            placeholder="Email"
+            onChange={(event) => setReferralToInvite(event.target.value)}
+          />
+          <Button
+            color="inherit"
+            onClick={handleInvite}
+            variant="contained"
+            sx={{ ml: 10 }}
+          >
+            Invite Referral
+          </Button>
+        </Box>
+      </Box>
+      <Box display="flex" width={"100%"} height={80}>
+        <Box m="auto" sx={{ fontWeight: "bold" }}>
+          Invited Referrals
+        </Box>
+      </Box>
+
+      <Box display="flex" width={"100%"} height={80}>
+        <Box m="auto">
+          <TableContainer component={Paper} style={{ width: 500 }}>
+            <Table style={{ width: 500 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Invite at</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {referrals.map((referral) => (
+                  <TableRow id={referral.id}>
+                    <TableCell>{referral.email}</TableCell>
+                    <TableCell>{referral.created_at}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Box>
     </React.Fragment>
   );
 };
