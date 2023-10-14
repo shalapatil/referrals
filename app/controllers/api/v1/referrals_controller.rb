@@ -1,5 +1,7 @@
 class Api::V1::ReferralsController < ApplicationController
   def index
+    referrals = Referral.all
+    render json: referrals
   end
 
   def create
