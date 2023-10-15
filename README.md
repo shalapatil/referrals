@@ -1,24 +1,34 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Referral is a tool used for adding referrals. User can signup and add referrals. Email will be sent out to the referral with a signup link.
 
-Things you may want to cover:
+## Installation
+1. Clone repo to local
 
-* Ruby version
+```
+git clone https://github.com/shalapatil/referrals
+```
 
-* System dependencies
+2. Install rvm and ruby
 
-* Configuration
+3. Install MySql
 
-* Database creation
+4. Install dependencies
 
-* Database initialization
+```
+bin/setup
+```
 
-* How to run the test suite
+5. Create .env file by using .env.example (required for sending emails)
 
-* Services (job queues, cache servers, search engines, etc.)
+6. Run the local app
 
-* Deployment instructions
+```
+bin/dev
+```
 
-* ...
+7. Login using credentials from seed file or signup
+
+## Testing
+
+Run the specs using `rspec` command

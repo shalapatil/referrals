@@ -11,7 +11,7 @@ module Api
           render json: { error: 'Invalid password' }, status: :unprocessable_entity
         else
           sign_in(user)
-          render json: { msg: 'successful login', user: }, status: :ok
+          render json: { msg: 'successful login', user: user}, status: :ok
         end
       end
 

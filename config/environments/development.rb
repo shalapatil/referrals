@@ -77,7 +77,7 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   host = ENV.fetch('APP_BASE_URL', 'localhost')
-  config.action_mailer.default_url_options = { host: }
+  config.action_mailer.default_url_options = { host: host}
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
