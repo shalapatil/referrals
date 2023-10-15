@@ -1,21 +1,19 @@
-import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import authenticationApi from "../apis/authentication";
-import Alert from "@material-ui/lab/Alert";
+import React, { useState } from 'react'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
+import Link from '@material-ui/core/Link'
+import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import Typography from '@material-ui/core/Typography'
+import Container from '@material-ui/core/Container'
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import authenticationApi from '../apis/authentication'
+import Alert from '@material-ui/lab/Alert'
 
-function Copyright(props) {
+function Copyright (props) {
   return (
     <Typography
       variant="body2"
@@ -23,49 +21,46 @@ function Copyright(props) {
       align="center"
       {...props}
     >
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Referrals
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
-  );
+  )
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
+const defaultTheme = createTheme()
 
-const defaultTheme = createTheme();
-
-export default function SignUp() {
-  const [alert, setAlert] = useState("");
-  const [success, setSuccess] = useState(false);
+export default function SignUp () {
+  const [alert, setAlert] = useState('')
+  const [success, setSuccess] = useState(false)
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let email = data.get("email");
-    let password = data.get("password");
-    let repassword = data.get("repassword");
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+    const email = data.get('email')
+    const password = data.get('password')
+    const repassword = data.get('repassword')
     if (!email || !password || !repassword) {
-      setAlert("Please enter email and password!");
-      return;
+      setAlert('Please enter email and password!')
+      return
     }
     if (password === repassword) {
       try {
-        let res = await authenticationApi.signup({ email, password });
-        console.log("res", res);
+        const res = await authenticationApi.signup({ email, password })
         if (res.status === 200) {
-          setAlert("");
-          setSuccess(true);
+          setAlert('')
+          setSuccess(true)
         }
       } catch (error) {
-        setAlert("Please use valid email and password of at least length 6");
+        setAlert('Please use valid email and password of at least length 6')
       }
     } else {
-      setAlert("Passwords doesn't match");
+      setAlert("Passwords doesn't match")
     }
-  };
+  }
 
   const renderSignUp = () => {
     return (
@@ -76,12 +71,12 @@ export default function SignUp() {
           <Box
             sx={{
               marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -148,8 +143,8 @@ export default function SignUp() {
           <Copyright sx={{ mt: 5 }} />
         </Container>
       </ThemeProvider>
-    );
-  };
+    )
+  }
 
   const renderSuccessSignup = () => {
     return (
@@ -160,9 +155,9 @@ export default function SignUp() {
           <Box
             sx={{
               marginTop: 100,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
             }}
           >
             <Typography component="h1" variant="h5">
@@ -174,8 +169,8 @@ export default function SignUp() {
           </Box>
         </Container>
       </ThemeProvider>
-    );
-  };
+    )
+  }
 
-  return success ? renderSuccessSignup() : renderSignUp();
+  return success ? renderSuccessSignup() : renderSignUp()
 }
