@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV["DEFAULT_MAILER_SENDER"]
-  layout "mailer"
+  default from: ENV.fetch('DEFAULT_MAILER_SENDER', nil)
+  layout 'mailer'
 end
