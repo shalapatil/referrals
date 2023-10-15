@@ -10,9 +10,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Box } from "@material-ui/core";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Moment from "moment";
 
-
-const List = ({setIsLoggedIn}) => {
+const List = ({ setIsLoggedIn }) => {
   const [referrals, setReferrals] = useState([]);
   const [referralToInvite, setReferralToInvite] = useState("");
 
@@ -25,11 +27,19 @@ const List = ({setIsLoggedIn}) => {
     setReferrals(res.data);
   };
 
-
   const handleInvite = async () => {
-    const res = await referralApi.create({ email: referralToInvite });
-    setReferralToInvite("");
-    fetchReferrals();
+    try {
+      const res = await referralApi.create({ email: referralToInvite });
+      setReferralToInvite("");
+      fetchReferrals();
+      toast.success("Referral Invited!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (error) {
+      toast.error("Please enter valid and unique email!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   return (
@@ -37,6 +47,7 @@ const List = ({setIsLoggedIn}) => {
       <Box display="flex" width={"100%"} height={80}>
         <Box m="auto">
           <TextField
+            inputProps={{ size: 40 }}
             id="referralEmail"
             value={referralToInvite}
             placeholder="Email"
@@ -47,6 +58,7 @@ const List = ({setIsLoggedIn}) => {
             onClick={handleInvite}
             variant="contained"
             sx={{ ml: 10 }}
+            disabled={!referralToInvite}
           >
             Invite Referral
           </Button>
@@ -65,14 +77,19 @@ const List = ({setIsLoggedIn}) => {
               <TableHead>
                 <TableRow>
                   <TableCell>Email</TableCell>
-                  <TableCell>Invite at</TableCell>
+                  <TableCell>Invited at</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
+                {/* Improvement: Add pagination */}
                 {referrals.map((referral) => (
                   <TableRow id={referral.id}>
                     <TableCell>{referral.email}</TableCell>
-                    <TableCell>{referral.created_at}</TableCell>
+                    <TableCell>
+                      {Moment(referral.created_at).format(
+                        "DD MMM YY, HH:MM:SS"
+                      )}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -80,6 +97,7 @@ const List = ({setIsLoggedIn}) => {
           </TableContainer>
         </Box>
       </Box>
+      <ToastContainer />
     </React.Fragment>
   );
 };
