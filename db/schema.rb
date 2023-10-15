@@ -12,12 +12,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_231_014_060_851) do
+ActiveRecord::Schema[7.1].define(version: 20_231_015_095_646) do
   create_table 'referrals', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.bigint 'sender_id', null: false
     t.string 'email', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_referrals_on_email', unique: true
     t.index ['sender_id'], name: 'index_referrals_on_sender_id'
   end
 
