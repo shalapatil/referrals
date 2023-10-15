@@ -9,6 +9,7 @@ class Api::V1::ReferralsController < ApplicationController
   def create
     referral = Referral.create!(referral_params)
     if referral
+      UserMailer.signup_email(referral).deliver_later
       render json: referral
     else
       render json referral.error

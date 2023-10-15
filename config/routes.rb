@@ -4,16 +4,17 @@ Rails.application.routes.draw do
       resources :referrals, only: [:index, :create]
 
       devise_scope :user do
-        post "login", to: "sessions#create", as: "login"
-        delete "logout", to: "sessions#destroy", as: "logout"
-        post "signup", to: "registrations#create", as: "signup"
+        post "login", to: "sessions#create"
+        delete "logout", to: "sessions#destroy"
+        post "signup", to: "registrations#create"
       end
     end
   end
 
-  get "signup", to: "signup#show"
+  resources :signup, only: [:index]
 
   devise_for :users
+
   root "homepage#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
